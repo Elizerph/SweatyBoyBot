@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -24,21 +23,17 @@ namespace SweatyBoyBot
 			_enumerateItems = enumerateItems;
 		}
 
-		public string GetContent(string raw)
+		public IEnumerable<string> Parse(string raw)
 		{
 			var matches = new Regex(_regex).Matches(raw).Cast<Match>();
 			if (_matchLimit > 0)
 				matches = matches.Take(_matchLimit);
-			return string.Join(Environment.NewLine, GetContentLines(matches.Select(e => e.Groups)));
-		}
 
-		private IEnumerable<string> GetContentLines(IEnumerable<GroupCollection> regexGroups)
-		{
 			if (!string.IsNullOrWhiteSpace(_title))
 				yield return _title;
 
 			var index = 0;
-			foreach (var group in regexGroups)
+			foreach (var group in matches.Select(e => e.Groups))
 			{
 				var resultItem = _regexMatchPattern;
 				foreach (var key in _regexKeys)

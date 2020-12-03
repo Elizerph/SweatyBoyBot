@@ -2,7 +2,7 @@
 
 namespace SweatyBoyBot
 {
-	public class RawContentParserTemplate
+	public class RawContentParserTemplate : IFactory<RawContentParser>
 	{
 		public string Regex { get; set; }
 		public HashSet<string> RegexKeys { get; set; }
