@@ -1,4 +1,6 @@
-﻿namespace SweatyBoyBot
+﻿using SweatyBoyBot.Repositories;
+
+namespace SweatyBoyBot.RepositoryFactories
 {
 	public class MemoryRepositoryFactory : IFactory<IRepository>
 	{

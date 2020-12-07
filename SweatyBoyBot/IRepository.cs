@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SweatyBoyBot
 {
-	public interface IRepository
+	public interface IRepository : IDisposable
 	{
 		IReadOnlyCollection<WorkItem> GetWorkItems();
 		Task RemoveWorkItemsByChannel(IReadOnlyCollection<ulong> channelIds);

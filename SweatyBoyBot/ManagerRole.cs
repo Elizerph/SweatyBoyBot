@@ -1,4 +1,4 @@
-﻿using FluentNHibernate.Mapping;
+﻿//using FluentNHibernate.Mapping;
 
 namespace SweatyBoyBot
 {
@@ -8,13 +8,13 @@ namespace SweatyBoyBot
 		public virtual string RoleId { get; set; }
 	}
 
-	public class ManagerRoleMap : ClassMap<ManagerRole>
-	{
-		public ManagerRoleMap()
-		{
-			Table("ManagerRole");
-			Id(x => x.RoleId);
-			Map(x => x.GuildId);
-		}
-	}
+	//public class ManagerRoleMap : ClassMap<ManagerRole>
+	//{
+	//	public ManagerRoleMap()
+	//	{
+	//		Table("ManagerRole");
+	//		Id(x => x.RoleId);
+	//		Map(x => x.GuildId);
+	//	}
+	//}
 }

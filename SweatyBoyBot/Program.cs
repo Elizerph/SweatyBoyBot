@@ -1,7 +1,16 @@
 ﻿using Discord;
 using Discord.WebSocket;
 
+using Microsoft.Data.Sqlite;
+
+using SweatyBoyBot.Repositories;
+using SweatyBoyBot.Repositories.DbQueryProviders;
+using SweatyBoyBot.RepositoryFactories;
+
 using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -12,18 +21,48 @@ namespace SweatyBoyBot
 		private BotShell _bot;
 
 		public static void Main(string[] args)
-		=> new Program().MainAsync().GetAwaiter().GetResult();
+		=> new Program().MainAsync(args).GetAwaiter().GetResult();
 
-		public async Task MainAsync()
+		// token = args[0]
+		// dbType = args[1]
+		// dbConnection = args[2]
+		public async Task MainAsync(string[] args)
 		{
-			IFactory<IRepository> repositoryFactory;
-			var connectionString = Environment.GetEnvironmentVariable("SweatyBoyBotConnectionString");
-			if (string.IsNullOrEmpty(connectionString))
-				repositoryFactory = new MemoryRepositoryFactory();
+			string token;
+			IFactory<IRepository> repositoryFactory = new MemoryRepositoryFactory();
+			if (args != null && args.Length > 0)
+			{
+				token = args[0];
+				if (args.Length == 3)
+				{
+					var connection = DbConnections[args[1]];
+					connection.ConnectionString = args[2];
+					repositoryFactory = new DbRepositoryFactory
+					{
+						Connection = DbConnections[args[1]],
+						QueryProvider = DbQueryProviders[args[1]]
+					};
+				}
+			}
 			else
-				repositoryFactory = new NHibernateRepositoryFactory { ConnectionString = connectionString };
-
-			var token = Environment.GetEnvironmentVariable("SweatyBoyBotToken");
+			{
+				token = Environment.GetEnvironmentVariable("SweatyBoyBotToken");
+				foreach (var variable in DbTypes)
+				{
+					var connectionString = Environment.GetEnvironmentVariable(variable);
+					if (!string.IsNullOrEmpty(connectionString))
+					{
+						var connection = DbConnections[variable];
+						connection.ConnectionString = connectionString;
+						repositoryFactory = new DbRepositoryFactory
+						{ 
+							Connection = connection,
+							QueryProvider = DbQueryProviders[variable]
+						};
+						break;
+					}
+				}
+			}
 
 			if (string.IsNullOrEmpty(token))
 			{
@@ -50,5 +89,23 @@ namespace SweatyBoyBot
 			}
 			return Task.CompletedTask;
 		}
+
+		private static readonly IEnumerable<string> DbTypes = new[] 
+		{
+			"SweatyBoyBotMSSQL",
+			"SweatyBoyBotSQLite"
+		};
+
+		private static readonly Dictionary<string, IDbConnection> DbConnections = new Dictionary<string, IDbConnection>
+		{
+			{ "SweatyBoyBotMSSQL", new SqlConnection() },
+			{ "SweatyBoyBotSQLite", new SqliteConnection() }
+		};
+
+		private static readonly Dictionary<string, IDbQueryProvider> DbQueryProviders = new Dictionary<string, IDbQueryProvider>
+		{
+			{ "SweatyBoyBotMSSQL", new SqlQueryProvider() },
+			{ "SweatyBoyBotSQLite", new SqlQueryProvider() }
+		};
 	}
 }

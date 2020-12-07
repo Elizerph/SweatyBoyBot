@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SweatyBoyBot
+namespace SweatyBoyBot.Repositories
 {
 	public class MemoryRepository : IRepository
 	{
 		private readonly Dictionary<ulong, IReadOnlyCollection<ulong>> _managerRoles = new Dictionary<ulong, IReadOnlyCollection<ulong>>();
 		private List<WorkItem> _workItems = new List<WorkItem>();
+
+		public void Dispose()
+		{
+			
+		}
 
 		public IReadOnlyCollection<ulong> GetManagerRoles(ulong guildId)
 		{

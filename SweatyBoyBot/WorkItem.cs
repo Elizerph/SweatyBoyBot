@@ -1,4 +1,4 @@
-﻿using FluentNHibernate.Mapping;
+﻿//using FluentNHibernate.Mapping;
 
 using System;
 
@@ -13,16 +13,16 @@ namespace SweatyBoyBot
 		public virtual string Content { get; set; }
 	}
 
-	public class WorkItemMap : ClassMap<WorkItem>
-	{
-		public WorkItemMap()
-		{
-			Table("WorkItem");
-			Id(x => x.Id).GeneratedBy.Native();
-			Map(x => x.Frequency).Not.Nullable();
-			Map(x => x.NextRun).Not.Nullable();
-			Map(x => x.ChannelId).Not.Nullable();
-			Map(x => x.Content).Not.Nullable();
-		}
-	}
+	//public class WorkItemMap : ClassMap<WorkItem>
+	//{
+	//	public WorkItemMap()
+	//	{
+	//		Table("WorkItem");
+	//		Id(x => x.Id).GeneratedBy.Native();
+	//		Map(x => x.Frequency).Not.Nullable();
+	//		Map(x => x.NextRun).Not.Nullable();
+	//		Map(x => x.ChannelId).Not.Nullable();
+	//		Map(x => x.Content).Not.Nullable();
+	//	}
+	//}
 }
