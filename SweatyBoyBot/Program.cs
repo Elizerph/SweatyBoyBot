@@ -105,7 +105,7 @@ namespace SweatyBoyBot
 		private static readonly Dictionary<string, IDbQueryProvider> DbQueryProviders = new Dictionary<string, IDbQueryProvider>
 		{
 			{ "SweatyBoyBotMSSQL", new SqlQueryProvider() },
-			{ "SweatyBoyBotSQLite", new SqlQueryProvider() }
+			{ "SweatyBoyBotSQLite", new SqliteQueryProvider() }
 		};
 	}
 }
