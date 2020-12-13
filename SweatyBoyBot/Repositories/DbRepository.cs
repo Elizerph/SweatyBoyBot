@@ -36,7 +36,7 @@ namespace SweatyBoyBot.Repositories
 				.Select(e => new WorkItem
 				{
 					Id = int.Parse(e[0].ToString()),
-					NextRun = e[1].ToString().ToSweatyDateTime(),
+					NextRun = DateTime.Parse(e[1].ToString()),
 					Frequency = int.Parse(e[2].ToString()),
 					ChannelId = e[3].ToString(),
 					Content = e[4].ToString()

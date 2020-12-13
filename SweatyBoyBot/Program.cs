@@ -1,8 +1,6 @@
 ﻿using Discord;
 using Discord.WebSocket;
 
-using Microsoft.Data.Sqlite;
-
 using SweatyBoyBot.Repositories;
 using SweatyBoyBot.Repositories.DbQueryProviders;
 using SweatyBoyBot.RepositoryFactories;
@@ -92,20 +90,17 @@ namespace SweatyBoyBot
 
 		private static readonly IEnumerable<string> DbTypes = new[] 
 		{
-			"SweatyBoyBotMSSQL",
-			"SweatyBoyBotSQLite"
+			"SweatyBoyBotMSSQL"
 		};
 
 		private static readonly Dictionary<string, IDbConnection> DbConnections = new Dictionary<string, IDbConnection>
 		{
-			{ "SweatyBoyBotMSSQL", new SqlConnection() },
-			{ "SweatyBoyBotSQLite", new SqliteConnection() }
+			{ "SweatyBoyBotMSSQL", new SqlConnection() }
 		};
 
 		private static readonly Dictionary<string, IDbQueryProvider> DbQueryProviders = new Dictionary<string, IDbQueryProvider>
 		{
-			{ "SweatyBoyBotMSSQL", new SqlQueryProvider() },
-			{ "SweatyBoyBotSQLite", new SqliteQueryProvider() }
+			{ "SweatyBoyBotMSSQL", new SqlQueryProvider() }
 		};
 	}
 }

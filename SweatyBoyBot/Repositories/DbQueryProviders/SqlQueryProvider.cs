@@ -44,7 +44,7 @@ namespace SweatyBoyBot.Repositories.DbQueryProviders
 			var parameters = workItems.SelectMany((e, i) => new[] 
 			{ 
 				Tuple.Create($"@id{i}", e.Id as object),
-				Tuple.Create($"@nr{i}", e.NextRun.ToSweatyString() as object),
+				Tuple.Create($"@nr{i}", e.NextRun.ToString() as object),
 				Tuple.Create($"@fr{i}", e.Frequency as object),
 				Tuple.Create($"@chid{i}", e.ChannelId as object),
 				Tuple.Create($"@cnt{i}", e.Content as object)
